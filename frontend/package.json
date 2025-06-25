@@ -11,30 +11,48 @@
     "typegen": "sanity typegen generate"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@sanity/client": "^7.4.0",
     "@sanity/image-url": "^1.1.0",
     "@sanity/uuid": "^3.0.2",
+    "@sanity/vision": "3",
+    "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/postcss": "^4.1.8",
     "@tailwindcss/typography": "^0.5.16",
     "@vercel/speed-insights": "^1.1.0",
     "autoprefixer": "^10.4.20",
+    "bcrypt": "^5.1.1",
+    "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
-    "next": "^15.1.6",
+    "next": "^15.2.1",
+    "next-auth": "^5.0.0-beta.25",
     "next-sanity": "^9.8.42",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "postcss": "^8.5.4",
+    "postgres": "^3.4.5",
+    "react": "latest",  
+    "react-dom": "latest",
     "sanity": "^3.91.0",
     "sonner": "^1.7.0",
     "styled-components": "^6.1.13",
-    "postcss": "^8.5.4",
-    "tailwindcss": "^4.1.8"
+    "tailwindcss": "^4.1.8",
+    "typescript": "5.7.3",
+    "use-debounce": "^10.0.4",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "typescript": "5.6.3",
-    "eslint": "^8.57.0",
-    "@types/react-dom": "^18.3.5",
-    "@types/node": "^20.17.17",
-    "@types/react": "^18.3.18",
-    "eslint-config-next": "^15.1.6"
+    "dotenv-cli": "^8.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.2",
+    "@types/bcrypt": "^5.0.2",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/node": "^22.10.7",
+    "@types/react": "^18.3.18"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "bcrypt",
+      "sharp"
+    ]
   }
 }
