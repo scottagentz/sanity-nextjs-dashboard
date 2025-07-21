@@ -1,4 +1,4 @@
-import { client } from '@/sanity/lib/client'
+import { sanityFetch } from '@/sanity/lib/live'
 import { urlForImage } from '@/sanity/lib/utils'
 import Image from 'next/image'
 import type { Metadata } from 'next'
@@ -18,7 +18,10 @@ async function getCustomers() {
     personalInterests,
     profileImage
   }`
-  return client.fetch(query, {}, { next: { revalidate: 3600 } })
+  const { data } = await sanityFetch({
+    query,
+  })
+  return data
 }
 
 export default async function CustomersPage() {
@@ -51,6 +54,7 @@ export default async function CustomersPage() {
             <div
               key={customer._id}
               className="rounded-md border border-gray-200 bg-white p-4 shadow-sm"
+              data-sanity={`customer,${customer._id}`}
             >
               {(() => {
                 const imageUrl = customer.profileImage ? urlForImage(customer.profileImage)?.url() : null
@@ -62,6 +66,7 @@ export default async function CustomersPage() {
                       width={80}
                       height={80}
                       className="rounded-full object-cover"
+                      data-sanity={`customer,${customer._id},profileImage`}
                     />
                   </div>
                 ) : (
@@ -73,23 +78,39 @@ export default async function CustomersPage() {
                 )
               })()}
 
-              <h2 className="text-lg font-semibold">{customer.name}</h2>
+              <h2 
+                className="text-lg font-semibold"
+                data-sanity={`customer,${customer._id},name`}
+              >
+                {customer.name}
+              </h2>
               {customer.workTitle && (
-                <p className="text-sm text-gray-500">{customer.workTitle}</p>
+                <p 
+                  className="text-sm text-gray-500"
+                  data-sanity={`customer,${customer._id},workTitle`}
+                >
+                  {customer.workTitle}
+                </p>
               )}
               
               {customer.address && (
                 <p className="mt-2 text-sm text-gray-600">
-                  <span className="font-medium">Address:</span> {customer.address}
+                  <span className="font-medium">Address:</span>{' '}
+                  <span data-sanity={`customer,${customer._id},address`}>
+                    {customer.address}
+                  </span>
                 </p>
               )}
 
               {customer.personalInterests?.length > 0 && (
                 <div className="mt-2">
                   <p className="font-medium text-sm text-gray-600">Interests:</p>
-                  <ul className="list-inside list-disc pl-4 text-sm text-gray-600">
-                    {customer.personalInterests.map((interest: string) => (
-                      <li key={interest}>{interest}</li>
+                  <ul 
+                    className="list-inside list-disc pl-4 text-sm text-gray-600"
+                    data-sanity={`customer,${customer._id},personalInterests`}
+                  >
+                    {customer.personalInterests.map((interest: string, index: number) => (
+                      <li key={`${customer._id}-interest-${index}`}>{interest}</li>
                     ))}
                   </ul>
                 </div>

@@ -30,6 +30,12 @@ const homeLocation = {
   href: '/',
 } satisfies DocumentLocation
 
+// Define the customers page location
+const customersLocation = {
+  title: 'Customers',
+  href: '/dashboard/customers',
+} satisfies DocumentLocation
+
 // resolveHref() is a convenience function that resolves the URL
 // path for different document types and used in the presentation tool.
 function resolveHref(documentType?: string, slug?: string): string | undefined {
@@ -38,6 +44,8 @@ function resolveHref(documentType?: string, slug?: string): string | undefined {
       return slug ? `/posts/${slug}` : undefined
     case 'page':
       return slug ? `/${slug}` : undefined
+    case 'customer':
+      return '/dashboard/customers'
     default:
       console.warn('Invalid document type:', documentType)
       return undefined
@@ -75,6 +83,10 @@ export default defineConfig({
           {
             route: '/posts/:slug',
             filter: `_type == "post" && slug.current == $slug || _id == $slug`,
+          },
+          {
+            route: '/dashboard/customers',
+            filter: `_type == "customer"`,
           },
         ]),
         // Locations Resolver API allows you to define where data is being used in your application. https://www.sanity.io/docs/presentation-resolver-api#8d8bca7bfcd7
@@ -114,6 +126,23 @@ export default defineConfig({
                   href: '/',
                 } satisfies DocumentLocation,
               ].filter(Boolean) as DocumentLocation[],
+            }),
+          }),
+          customer: defineLocations({
+            select: {
+              name: 'name',
+            },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: 'Customers Page',
+                  href: '/dashboard/customers',
+                },
+                {
+                  title: 'Home',
+                  href: '/',
+                },
+              ],
             }),
           }),
         },

@@ -23,30 +23,43 @@ export const { auth, signIn, signOut } = NextAuth({
   providers: [
     Credentials({
       async authorize(credentials) {
+        console.log('Auth attempt started');
+        
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
 
-        // Add console.log to dump parsedCredentials
-        console.log('Parsed Credentials:', parsedCredentials);
-
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
+          console.log('Email:', email);
+          console.log('Password length:', password.length);
+          
           const user = await getUser(email);
-          if (!user) return null;
+          
+          if (!user) {
+            console.log('User not found');
+            return null;
+          }
+          
+          console.log('User found, checking password');
           const passwordsMatch = await bcrypt.compare(password, user.password);
-
-          console.log('User:', user);
-          console.log('password:', password);
-          console.log('user.password:',
-            user.password);
-          console.log('Passwords Match:', passwordsMatch);
-
-          if (passwordsMatch) return user;
+          console.log('Password match result:', passwordsMatch);
+          
+          if (passwordsMatch) {
+            console.log('Login successful');
+            return {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+            };
+          } else {
+            console.log('Password mismatch');
+          }
+        } else {
+          console.log('Credential parsing failed');
         }
 
-        console.log('Invalid credentials');
-
+        console.log('Auth failed');
         return null;
       },
     }),

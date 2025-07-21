@@ -12,7 +12,7 @@ import { fetchRevenue } from '@/app/lib/data';
 
 export default async function RevenueChart() { // Make component async, remove the props
   const revenue = await fetchRevenue(); // Fetch data inside the component
-   
+  
   const chartHeight = 350;
   const { yAxisLabels, topLabel } = generateYAxis(revenue);
 
@@ -37,19 +37,25 @@ export default async function RevenueChart() { // Make component async, remove t
             ))}
           </div>
 
-          {revenue.map((month) => (
-            <div key={month.month} className="flex flex-col items-center gap-2">
-              <div
+          {revenue.map((month) => {
+            const barHeight = (chartHeight / topLabel) * month.revenue;
+            
+            return (
+              <div key={month.month} className="flex flex-col items-center gap-2">
+                              <div
                 className="w-full rounded-md bg-blue-300"
                 style={{
-                  height: `${(chartHeight / topLabel) * month.revenue}px`,
+                  height: `${barHeight}px`,
+                  backgroundColor: '#93c5fd', // Force blue color - needed for visibility
+                  minWidth: '20px', // Ensure minimum width
                 }}
               ></div>
-              <p className="-rotate-90 text-sm text-gray-400 sm:rotate-0">
-                {month.month}
-              </p>
-            </div>
-          ))}
+                <p className="-rotate-90 text-sm text-gray-400 sm:rotate-0">
+                  {month.month}
+                </p>
+              </div>
+            );
+          })}
         </div>
         <div className="flex items-center pb-2 pt-6">
           <CalendarIcon className="h-5 w-5 text-gray-500" />
