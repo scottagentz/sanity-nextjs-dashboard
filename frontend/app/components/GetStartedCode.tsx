@@ -7,7 +7,7 @@ export default function GetStartedCode() {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(
-      "npm create sanity@latest -- --template sanity-io/sanity-template-nextjs-clean",
+      "npm create sanity@latest -- --template scottagentz/sanity-nextjs-dashboard",
     );
     setShowTooltip(true);
     setTimeout(() => setShowTooltip(false), 2000);
@@ -17,7 +17,7 @@ export default function GetStartedCode() {
     <div className="flex flex-col md:inline-flex md:flex-row rounded-xl md:rounded-full shadow-xl md:whitespace-nowrap text-center bg-gray-900 p-4 md:pr-2 md:pl-6 md:py-2 text-white text-sm lg:text-base mt-6 font-mono gap-4 items-center selection:bg-blue selection:text-white">
       <span>
         npm create sanity@latest -- --template
-        sanity-io/sanity-template-nextjs-clean
+scottagentz/sanity-nextjs-dashboard
       </span>
       <button
         className="text-white flex items-center gap-2 relative cursor-pointer bg-blue md:aspect-square px-4 py-2 md:p-2 rounded-xl md:rounded-full hover:bg-yellow hover:text-black transition-colors duration-300"

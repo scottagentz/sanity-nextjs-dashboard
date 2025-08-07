@@ -17,7 +17,7 @@ export default async function Page() {
   // If not authenticated, show login prompt with hero images
   return (
     <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg p-4 md:h-52" style={{ backgroundColor: '#3b82f6' }}>
+      <div className="flex h-20 shrink-0 items-end rounded-lg p-4 md:h-32" style={{ backgroundColor: '#3b82f6' }}>
         <AcmeLogo />
       </div>
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
